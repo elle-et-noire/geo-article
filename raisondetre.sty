@@ -1,0 +1,177 @@
+%\RequirePackage{fix-cm}
+%\documentclass[dvipdfmx,a4paper]{jsarticle}
+\usepackage{amsmath,amssymb,mathtools,amsfonts,amsthm,mathrsfs,bbm}%基本的な数学記号
+\usepackage{amscd,ascmac,caption,graphicx,here,pgfplots,tikz,tcolorbox}%図
+\usepackage{bbm,bm,cases,empheq,xpatch,fouridx,txfonts}%物理記号、自作記号
+\usepackage[italicdiff]{physics}
+\usepackage{comment}  %コメント
+\usepackage{listings,jlisting}  %ソースコード
+\usepackage{fancyhdr,geometry,setspace,titlesec,tocloft} %体裁 %times
+\usepackage{hyperref,pxjahyper} %リンク
+\usepackage[T1]{fontenc} % フォント
+\usepackage{lmodern}
+%\usepackage{url,breakurl}
+% \mathtoolsset{showonlyrefs}%,showmanualtags} % https://mtino1594.hatenablog.com/entry/2017/11/20/012034
+\usetikzlibrary{intersections, calc, arrows, positioning}
+\tcbuselibrary{breakable, skins, theorems}
+\newcommand{\relmiddle}[1]{\mathrel{}\middle#1\mathrel{}}
+\newcommand{\absl}[1]{\bigl|#1\bigr|}
+\newcommand{\absf}[1]{\biggl|#1\biggr|}
+\newcommand{\parn}[1]{\biggl(#1\biggr)}
+\newcommand{\sqbr}[1]{\biggl[#1\biggr]}
+\newcommand{\pfrac}[2]{\parn{\dfrac{#1}{#2}}}
+\newcommand{\pfracw}[4]{\parn{#1\dfrac{#2}{#3}#4}}
+\def\hr{\noindent\hrulefill\vspace*{5pt}}
+\def\e{\mathrm{e}}
+\def\ve{\varepsilon}
+\def\i{\mathrm{i}}
+\def\ds{\displaystyle}
+\def\ub{\underbrace}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\DeclareMathOperator{\Ai}{Ai}
+\DeclareMathOperator{\Bi}{Bi}
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}
+\newtheorem*{theorem*}{定理}
+\newtheorem{definition}{定義}
+\newtheorem*{definition*}{定義}
+\newtheorem{proposition}{命題}
+\newtheorem*{proposition*}{命題}
+\renewcommand\proofname{\bf 証明}
+
+\geometry{
+    left=0.7truein,
+    right=0.7truein,
+    top=1truein,
+    bottom=0.7truein,
+}
+
+\hypersetup{% hyperrefオプションリスト
+%setpagesize=false,
+% bookmarksnumbered=true,%
+% bookmarksopen=true,%
+ colorlinks=true,
+ linkcolor=blue
+% citecolor=red,
+}
+
+% https://karat5i.blogspot.com/2014/10/latex.html
+% https://clutte.red/blog/2018/11/latex-table-caption/
+\captionsetup[figure]{
+  format=plain,
+  labelformat=simple,
+  labelsep=quad,
+  labelfont={bf,footnotesize},
+  textfont={up,footnotesize}
+}
+
+%\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}%[\color{violet}{\titlerule[2pt]}]
+%\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}%[\color{teal}{\vskip-13pt \rule{0.7\textwidth}{1.5pt}}]
+%\titleformat{\subsubsection}{\normalfont\bfseries}{\thesubsubsection}{1em}{}%[\color{teal}{\vskip-13pt \rule{0.4\textwidth}{1pt}}]
+% \renewcommand{\thesection}{$\S$ \arabic{section}}
+
+% https://qiita.com/shohirose/items/52f778ebd21f8e5f5c0e
+\titleformat{\section}% command
+    [block]% shape
+    {\bfseries\Large}% format
+    {\thesection}% label
+    {0.5em}% sep
+    {}% before-code
+\titlespacing{\section}
+    {0pt}% left
+    {18pt}% before-sep
+    {6pt}% after-sep
+
+\titleformat{\subsection}% command
+    [block]% shape
+    {\bfseries\large}% format
+    {\thesubsection}% label
+    {0.5em}% sep
+    {}% before-code
+\titlespacing{\subsection}
+    {0pt}% left
+    {18pt}% before-sep
+    {6pt}% after-sep
+
+\titleformat{\subsubsection}% command
+    [block]% shape
+    {\bfseries\normalsize}% format
+    {\thesubsubsection}% label
+    {0.5em}% sep
+    {}% before-code
+\titlespacing{\subsubsection}
+    {0pt}% left
+    {18pt}% before-sep
+    {6pt}% after-sep
+
+% ヘッダー、フッター
+% http://osksn2.hep.sci.osaka-u.ac.jp/~naga/miscellaneous/tex/tex-tips1.html
+\pagestyle{fancy}
+\markright{\thesubsection} % odd-head
+\markboth{\thesection}{\thesubsection} % even-head, odd-head
+\lhead{} % \slshape は斜体文字の指定 \leftmark のデフォルトは sectionhead
+\chead{}
+\rhead{\thepage} % \rightmark のデフォルトは chapter head
+\lfoot{} % このファイル自身の名前を出力
+\cfoot{} % 頁番号
+%\rfoot{} 　% 日付と時刻を出力
+\renewcommand{\headrulewidth}{0.4pt} % ヘッダーラインの線幅変更。
+% \renewcommand{\footrulewidth}{0pt} % フッターラインの線幅の変更。デフォルトは0.4pt
+
+\def\sqrtexplained#1{%
+  \begingroup
+    \sbox0{$#1$}
+    \def\underbrace##1_##2{##1}
+    \sbox2{$#1$}
+    \dimen0=\wd0 \advance\dimen0-\wd2
+    \mathrlap{\sqrt{\phantom{\displaystyle#1}\kern\dimen0 }}
+    \hphantom{\sqrt{\vphantom{\displaystyle#1}}}
+  \endgroup
+  #1}
+
+\DeclarePairedDelimiter{\IntervalOO}{]}{[}
+\newcommand{\intervaloo}[2]{\IntervalOO{#1, #2}}
+%\DeclarePairedDeliminater{\DoubleKet}{\vert}{\rangle\rangle}
+%\newcommand{\dket}[1]{\DoubleKet{#1}}
+
+%% 長いURLを自動的に改行する
+\newcommand{\myurl}[2]{%
+  \href{#1}{\texttt{\seqsplit{#2}}}%
+}
+
+%% https://qiita.com/Krypf/items/9a9919c2ef748867de4b
+\NewDocumentCommand\zero{o o}{
+    \scalebox{0.8}[1.5]{\kern .1mm$\mathbbm{o}$}%
+    \IfValueT{#1}{%
+        \IfNoValueT{#2}{_{#1}}
+        \IfValueT{#2}{_{#1\times#2}}
+    }%must use [] for option args
+}
+\NewDocumentCommand\eins{o o}{
+    \mathbbm{1}%
+    \IfValueT{#1}{%
+        \IfNoValueT{#2}{_{#1}}
+        \IfValueT{#2}{_{#1\times#2}}
+    }%must use [] for option args
+}
+
+\makeatletter
+%%%
+%%%  左側、右側に subscript を付記する。
+%%%  使い方: \subscripts{左下}{中身}{右下}
+%%%
+%%%  by FUJIWARA Hiroshi <fujiwara (at) acs.i.kyoto-u.ac.jp>
+%%%
+\newcommand{\subscripts}[3]{%
+  \@mathmeasure\z@\displaystyle{#2}%
+  \global\setbox\@ne\vbox to\ht\z@{}\dp\@ne\dp\z@
+  \setbox\tw@\box\@ne
+  \@mathmeasure4\displaystyle{\copy\tw@_{#1}}%
+  \@mathmeasure6\displaystyle{{#2}_{#3}}%
+  \dimen@-\wd6 \advance\dimen@\wd4 \advance\dimen@\wd\z@
+  \hbox to\dimen@{}\mathop{\kern-\dimen@\box4\box6}%
+}
+\makeatother
