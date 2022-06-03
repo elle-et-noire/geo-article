@@ -1,0 +1,51 @@
+\documentclass[dvipdfmx, a4paper]{jsarticle}
+\usepackage{raisondetre}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{(\arabic{subsection})}
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{1em}{}
+\title{多様体論と一般相対論}
+\author{清水 陽喜}
+\pgfplotsset{compat=1.16}
+\begin{document}
+\maketitle
+
+\section{序文}
+本記事はPhysics Lab.2022 - 幾何班の記事として書かれました。幾何班の理念は班長が\href{https://event.phys.s.u-tokyo.ac.jp/physlab2022/posts/02/}{Physics Lab.2022 幾何班紹介 (Advent Calendar)}に書いた通りです。
+その1つは、（局所的な）幾何学を座標系に依らない形で（あるいは座標変換について\textbf{共変}な形式で）記述することにあります。
+そのようなことを行う分野が\textbf{微分幾何学}です。
+ところで、実際の物理は人間が勝手に定める座標系には依存しない一方で、人間が計算を行うためには座標系を定めることが避けられないという
+ジレンマは、この微分幾何学がちょうど解消してくれます。この記事は、大きく前後半に分かれています。
+
+前半で微分幾何学の道具立てを行います。
+微分幾何学では、多様体という、局所的には$\R^n$と見なせるような位相空間を考えます。異なる\textbf{開被覆}の間を変換関数によって繋ぐことで、
+座標を定めつつ、座標に依存しない対象を記述することができます。
+
+後半では微分幾何学を一般相対論へ適用していきます。
+一様でない重力場が存在する場合には、特殊相対論で仮定していた慣性系は大域的には存在しないことが示せるため、一般相対論へ拡張することが必要です。
+その際、曲がった時空間での物理を記述するために微分幾何学が必要になります。
+
+この記事は、五月祭が終わって2週間後に書き上げられました。筆者はPhysics Lab. 2022の対面企画で幾何班として来場者にポスター発表を
+行っていました。様々な学科の学生や大学院生の他、中高生や社会人まで、様々な方からの、議論、勉強についての相談などを頂いたりこちらからしたりと、
+充実した時間となったことをありがたく思います。その中で、筆者の不勉強により満足に回答できず心残りとなっていた部分も本記事で補足しています。
+この記事が対面でお越しいただいた方々の目にも留まることを願っています。
+
+\tableofcontents
+
+\part{多様体論}
+\section{多様体の定義}
+多様体は、大雑把に言うと\textbf{位相空間}の上に局所的に$\R^n$とみなせる座標を入れたものです。
+位相空間は、集合の上に\textbf{位相}、つまり何が開集合となるかを定めたものです。集合$X$の上の位相は
+\begin{enumerate}
+  \item 空集合、$X$は開集合。
+  \item 有限個の開集合の共通部分も開集合。
+  \item 無限個の開集合の和集合も開集合。
+\end{enumerate}
+を満たすものです。
+
+\part{一般相対論}
+
+\begin{thebibliography}{9}
+  \bibitem{a} 『理論物理学のための幾何学とトポロジーI[原著第2版]』（2019，日本評論社）
+\end{thebibliography}
+\end{document}
